@@ -1,0 +1,45 @@
+high elf
+fire genasi
+githzerai
+rock gnome
+hobgoblin
+mephistopholes tiefling
+yuan-ti pureblood
+warforged
+bugbear
+dragonborn
+mountain dwarf
+earth genasi
+githyanki
+goliath
+half-orc
+tortle
+eladrin elf
+lightfoot halfling
+tabaxi
+glasya tiefling
+triton
+verdan
+protector aasimar
+hill dwarf
+firbolg
+water genasi
+aarakocra
+wood elf
+ghostwise halfling
+scourge aasimar
+human
+stout halfling
+kobold
+goblin
+kenku
+lizardfolk
+fallen aasimar
+zariel tiefling
+shadar-kai elf
+dispater tiefling
+levistus tiefling
+satyr
+simic hybrid
+forest gnome
+variant eladrin
