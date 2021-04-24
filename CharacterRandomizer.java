@@ -186,7 +186,7 @@ public class CharacterRandomizer {
 			}
 			
 			if(clas.equals("fighter")) {
-				if(subclass.equals("psi Warrior") || subclass.equals("eldritch Knight")) {
+				if(subclass.equals("psi warrior") || subclass.equals("eldritch knight")) {
 					dex = statArray[0];
 					cha = statArray[1];
 					wis = statArray[2];
@@ -231,7 +231,7 @@ public class CharacterRandomizer {
 			}
 			
 			if(clas.equals("rogue")) {
-				if(subclass.equals("arcane Trickster")) {
+				if(subclass.equals("arcane trickster")) {
 					str = statArray[0];
 					cha = statArray[1];
 					wis = statArray[2];
@@ -284,6 +284,12 @@ public class CharacterRandomizer {
 				intl = statArray[5];
 			}
 			
+			//set racial ability increases
+			if(race.contains("tiefling")) {
+				cha += 2;
+				if(race.contains("glasya")) dex += 1;
+			}
+			
 			//set base ac
 			//ac is a final int for some bug reasons, so can't edit it outside of this block
 			if(clas.equals("monk")) ac = (short)(10 + ((((dex < 10) ? dex-1:dex)-10)/2) + ((((wis < 10) ? wis-1:wis)-10)/2));
@@ -295,13 +301,13 @@ public class CharacterRandomizer {
 			ArrayList<String> choice = new ArrayList<String>();
 			
 			//frame to output character info
-			charOutput.setSize(350,300);
+			charOutput.setSize(378,300);
 			charOutput.getContentPane().setBackground(Color.black);
 			charOutput.setLayout(null);
 			
 			//general character information
 			JPanel general = new JPanel();
-			general.setBounds(5,5,300,20);
+			general.setBounds(5,5,355,20);
 			general.setBackground(Color.black);
 			general.setLayout(new FlowLayout());
 			
@@ -312,12 +318,13 @@ public class CharacterRandomizer {
 			info.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 			info.setText(String.format("class: %s %s %s | race: %s | unarmored ac: %s", ((subclass.equals("n/a")) ? "" : subclass), 
 					clas, Integer.toString(level), race, Short.toString(ac)));
+			info.setBorder(BorderFactory.createLineBorder(Color.white));
 			general.add(info);
 			charOutput.add(general);
 			
 			//stats
 			JPanel statList = new JPanel();
-			statList.setBounds(5,30,300,50);
+			statList.setBounds(26,30,300,50);
 			statList.setLayout(new GridLayout(2,6));
 			statList.setBackground(Color.black);
 			
@@ -398,22 +405,32 @@ public class CharacterRandomizer {
 			//labels for feature and choices
 			JPanel featLabel = new JPanel();
 			featLabel.setBounds(35,85,90,20);
-			featLabel.setBackground(Color.blue);
+			featLabel.setBackground(Color.black);
+			JLabel fl = new JLabel("Features:");
+			fl.setBackground(Color.black);
+			fl.setForeground(Color.white);
+			fl.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+			featLabel.add(fl);
 			charOutput.add(featLabel);
 			JPanel choiceLabel = new JPanel();
 			choiceLabel.setBounds(215,85,90,20);
-			choiceLabel.setBackground(Color.magenta);
+			choiceLabel.setBackground(Color.black);
+			JLabel cl = new JLabel("Choices Left:");
+			cl.setBackground(Color.black);
+			cl.setForeground(Color.white);
+			cl.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+			choiceLabel.add(cl);
 			charOutput.add(choiceLabel);
 			
 			//feature names
 			JPanel featsPanel = new JPanel();
-			featsPanel.setBounds(5,110,160,150);
+			featsPanel.setBounds(5,110,175,150);
 			featsPanel.setBackground(Color.magenta);
 			charOutput.add(featsPanel);
 			
 			//choices to make
 			JPanel makeChoice = new JPanel();
-			makeChoice.setBounds(170,110,160,150);
+			makeChoice.setBounds(185,110,175,150);
 			makeChoice.setBackground(Color.blue);
 			charOutput.add(makeChoice);
 			
@@ -428,6 +445,60 @@ public class CharacterRandomizer {
 				
 				//wait to make it real until processing is done
 				charOutput.setVisible(true);
+				
+				//fill out feature blocks
+				if(clas.equals("artificer")) {
+					
+				}
+				
+				if(clas.equals("barbarian")) {
+									
+				}
+				
+				if(clas.equals("bard")) {
+					
+				}
+				
+				if(clas.equals("cleric")) {
+					
+				}
+				
+				if(clas.equals("druid")) {
+					
+				}
+				
+				if(clas.equals("fighter")) {
+					
+				}
+				
+				if(clas.equals("monk")) {
+					
+				}
+				
+				if(clas.equals("paladin")) {
+					
+				}
+				
+				if(clas.equals("ranger")) {
+					
+				}
+				
+				if(clas.equals("rogue")) {
+					
+				}
+				
+				if(clas.equals("sorcerer")) {
+					
+				}
+				
+				if(clas.equals("warlock")) {
+					
+				}
+				
+				if(clas.equals("wizard")) {
+					
+				}
+				
 				//wait a sec, then open webpages
 				openWebpage("https://media.wizards.com/2016/dnd/downloads/5E_CharacterSheet_Fillable.pdf"); //Character sheet
 			});
@@ -485,6 +556,20 @@ public class CharacterRandomizer {
 		else return "artificer";
 	}
 	
+	//TODO: list all racial feats, use txt file with list of used races
+	//returns an array including racial features
+	public String[] getRacialFeatures() {
+		ArrayList<String> features = new ArrayList<String>();
+		
+		if(race.contains("tiefling")) {
+			features.add("-Darkvision(60ft)");
+			features.add("-Speed: 30ft");
+			features.add("-Hellish Resistance");
+		}
+		
+		return (String[])(features.toArray());
+	}
+	
 	//pick a subclass. return "n/a" if none is chosen
 	public static String getSubclass() {
 		
@@ -500,98 +585,98 @@ public class CharacterRandomizer {
 		if(clas.equals("barbarian")) {
 			if (level < 3) return "n/a";
 			int rand = (int)(Math.random()*8);
-			if(rand == 0) return "path of the Ancestral Guardian";
-			if(rand == 1) return "path of the Battlerager";
-			if(rand == 2) return "path of the Beast";
-			if(rand == 3) return "path of the Berserker";
-			if(rand == 4) return "path of the Storm Herald";
-			if(rand == 5) return "path of the Totem Warrior";
-			if(rand == 6) return "path of the Zealot";
-			else return "path of Wild Magic";
+			if(rand == 0) return "path of the ancestral guardian";
+			if(rand == 1) return "path of the battlerager";
+			if(rand == 2) return "path of the beast";
+			if(rand == 3) return "path of the berserker";
+			if(rand == 4) return "path of the storm herald";
+			if(rand == 5) return "path of the totem warrior";
+			if(rand == 6) return "path of the zealot";
+			else return "path of wild magic";
 		}
 		
 		if(clas.equals("bard")) {
 			if(level < 3) return "n/a";
 			int rand = (int)(Math.random()*7);
-			if(rand == 0) return "college of Whispers";
-			if(rand == 1) return "college of Valor";
-			if(rand == 2) return "college of Swords";
-			if(rand == 3) return "college if Lore";
-			if(rand == 4) return "college of Glamour";
-			if(rand == 5) return "college of Eloquence";
-			else return "college of Creation";
+			if(rand == 0) return "college of whispers";
+			if(rand == 1) return "college of valor";
+			if(rand == 2) return "college of swords";
+			if(rand == 3) return "college if lore";
+			if(rand == 4) return "college of glamour";
+			if(rand == 5) return "college of eloquence";
+			else return "college of creation";
 		}
 		
 		if(clas.equals("cleric")) {
 			int rand = (int)(Math.random()*14);
-			if(rand == 0) return "arcana Domain";
-			if(rand == 1) return "death Domain";
-			if(rand == 2) return "forge Domain";
-			if(rand == 3) return "grave Domain";
-			if(rand == 4) return "knowledge Domain";
-			if(rand == 5) return "life Domain";
-			if(rand == 6) return "light Domain";
-			if(rand == 7) return "nature Domain";
-			if(rand == 8) return "order Domain";
-			if(rand == 9) return "peace Domain";
-			if(rand == 10) return "tempest Domain";
-			if(rand == 11) return "trickery Domain";
-			if(rand == 12) return "twilight Domain";
-			else return "war Domain";
+			if(rand == 0) return "arcana domain";
+			if(rand == 1) return "death domain";
+			if(rand == 2) return "forge domain";
+			if(rand == 3) return "grave domain";
+			if(rand == 4) return "knowledge domain";
+			if(rand == 5) return "life domain";
+			if(rand == 6) return "light domain";
+			if(rand == 7) return "nature domain";
+			if(rand == 8) return "order domain";
+			if(rand == 9) return "peace domain";
+			if(rand == 10) return "tempest domain";
+			if(rand == 11) return "trickery domain";
+			if(rand == 12) return "twilight domain";
+			else return "war domain";
 		}
 		
 		if(clas.equals("druid")) {
 			if(level < 2) return "n/a";
 			int rand = (int)(Math.random()*7);
-			if(rand == 0) return "circle of Dreams";
-			if(rand == 1) return "circle of Spores";
-			if(rand == 2) return "circle of Stars";
-			if(rand == 3) return "circle of the Wildfire";
-			if(rand == 4) return "circle of the Moon";
-			if(rand == 5) return "circle of the Land";
-			else return "circle of the Shepherd";
+			if(rand == 0) return "circle of dreams";
+			if(rand == 1) return "circle of spores";
+			if(rand == 2) return "circle of stars";
+			if(rand == 3) return "circle of the wildfire";
+			if(rand == 4) return "circle of the moon";
+			if(rand == 5) return "circle of the land";
+			else return "circle of the shepherd";
 		}
 		
 		if(clas.equals("fighter")) {
 			if(level < 3) return "n/a";
 			int rand = (int)(Math.random()*10);
 			if(rand == 0) return "samurai";
-			if(rand == 1) return "rune Knight";
-			if(rand == 2) return "purple Dragon Knight";
-			if(rand == 3) return "eldritch Knight";
-			if(rand == 4) return "echo Knight";
+			if(rand == 1) return "rune knight";
+			if(rand == 2) return "purple dragon knight";
+			if(rand == 3) return "eldritch knight";
+			if(rand == 4) return "echo knight";
 			if(rand == 5) return "champion";
 			if(rand == 6) return "cavalier";
-			if(rand == 7) return "battle Master";
-			if(rand == 8) return "psi Warrior";
+			if(rand == 7) return "battle master";
+			else return "psi warrior";
 		}
 		
 		if(clas.equals("monk")) {
 			if(level < 3) return "n/a";
 			String sc = "way of";
 			int rand = (int)(Math.random()*9);
-			if(rand == 0) return sc + "Mercy";
-			if(rand == 1) return sc + "Shadow";
-			if(rand == 2) return sc + "the Astral Self";
-			if(rand == 3) return sc + "the Drunken Master";
-			if(rand == 4) return sc + "the Four Elements";
-			if(rand == 5) return sc + "the Long Death";
-			if(rand == 6) return sc + "the Open Hand";
-			if(rand == 7) return sc + "the Kensei";
-			else return sc + "the Sun Soul";
+			if(rand == 0) return sc + "mercy";
+			if(rand == 1) return sc + "shadow";
+			if(rand == 2) return sc + "the astral self";
+			if(rand == 3) return sc + "the drunken master";
+			if(rand == 4) return sc + "the four elements";
+			if(rand == 5) return sc + "the long death";
+			if(rand == 6) return sc + "the open hand";
+			if(rand == 7) return sc + "the kensei";
+			else return sc + "the sun soul";
 		}
 		
 		if(clas.equals("paladin")) {
 			if (level < 3) return "n/a";
 			int rand = (int)(Math.random()*9);
-			if(rand == 0) return "oath of Conquest";
-			if(rand == 1) return "oath of Devotion";
-			if(rand == 2) return "oath of Glory";
-			if(rand == 3) return "oath of Redemption";
-			if(rand == 4) return "oath of the Ancients";
-			if(rand == 5) return "oath of the Crown";
-			if(rand == 6) return "oath of the Watchers";
-			if(rand == 7) return "oath of Vengeance";
+			if(rand == 0) return "oath of conquest";
+			if(rand == 1) return "oath of devotion";
+			if(rand == 2) return "oath of glory";
+			if(rand == 3) return "oath of redemption";
+			if(rand == 4) return "oath of the ancients";
+			if(rand == 5) return "oath of the crown";
+			if(rand == 6) return "oath of the watchers";
+			if(rand == 7) return "oath of vengeance";
 			else return "oathbreaker";
 		}
 		
@@ -599,49 +684,49 @@ public class CharacterRandomizer {
 			if (level < 3) return "n/a";
 			int rand = (int)(Math.random()*7);
 			if(rand == 0) return "beastmaster";
-			if(rand == 1) return "fey Wanderer";
-			if(rand == 2) return "gloom Stalker";
-			if(rand == 3) return "horizon Walker";
-			if(rand == 4) return "hunter";
-			if(rand == 5) return "monster Slayer";
-			else return "swarm Keeper";
+			if(rand == 1) return "fey wanderer";
+			if(rand == 2) return "gloom stalker";
+			if(rand == 3) return "horizon walker";
+			if(rand == 4) return "swarm keeper";
+			if(rand == 5) return "monster slayer";
+			else return "hunter";
 		}
 		
 		if(clas.equals("rogue")) {
 			if (level < 3) return "n/a";
 			int rand = (int)(Math.random()*9);
-			if(rand == 0) return "arcane Trickster";
+			if(rand == 0) return "arcane trickster";
 			if(rand == 1) return "assassin";
 			if(rand == 2) return "inquisitive";
 			if(rand == 3) return "phantom";
 			if(rand == 4) return "mastermind";
 			if(rand == 5) return "scout";
-			if(rand == 6) return "soul Knife";
+			if(rand == 6) return "soul knife";
 			if(rand == 7) return "swashbuckler";
 			else return "thief";
 		}
 		
 		if(clas.equals("sorcerer")) {
 			int rand = (int)(Math.random()*7);
-			if(rand == 0) return "aberrant Mind";
-			if(rand == 1) return "clockwork Soul";
-			if(rand == 2) return "divine Soul";
-			if(rand == 3) return "draconic Bloodline";
-			if(rand == 4) return "shadow Magic";
+			if(rand == 0) return "aberrant mind";
+			if(rand == 1) return "clockwork soul";
+			if(rand == 2) return "divine soul";
+			if(rand == 3) return "draconic bloodline";
+			if(rand == 4) return "shadow magic";
 			if(rand == 5) return "storm";
-			else return "wild Magic";
+			else return "wild magic";
 		}
 		
 		if(clas.equals("warlock")) {
 			int rand = (int)(Math.random()*8);
-			if(rand == 0) return "archfey Patron";
-			if(rand == 1) return "celestial Patron";
-			if(rand == 2) return "fathomless Patron";
-			if(rand == 3) return "fiend Patron";
-			if(rand == 4) return "genie Patron";
-			if(rand == 5) return "great Old One Patron";
+			if(rand == 0) return "archfey patron";
+			if(rand == 1) return "celestial patron";
+			if(rand == 2) return "fathomless patron";
+			if(rand == 3) return "fiend patron";
+			if(rand == 4) return "genie patron";
+			if(rand == 5) return "great old one patron";
 			if(rand == 6) return "hexblade";
-			else return "undying Patron";
+			else return "undying patron";
 		}
 		
 		if(clas.equals("wizard")) {
@@ -650,7 +735,7 @@ public class CharacterRandomizer {
 			if(rand == 0) return "bladesinging";
 			if(rand == 1) return "chronurgy";
 			if(rand == 2) return "graviturgy";
-			if(rand == 3) return "order of the Scribes";
+			if(rand == 3) return "order of the scribes";
 			if(rand == 4) return "abjuration";
 			if(rand == 5) return "conjuration";
 			if(rand == 6) return "divination";
