@@ -284,10 +284,177 @@ public class CharacterRandomizer {
 				intl = statArray[5];
 			}
 			
+			//arraylists for keeping track of feat names and such
+			ArrayList<String> feats = new ArrayList<String>();
+			ArrayList<String> choice = new ArrayList<String>();
+			choice.add("-Background features and traits");
+			
 			//set racial ability increases
 			if(race.contains("tiefling")) {
 				cha += 2;
-				if(race.contains("glasya")) dex += 1;
+				if(race.contains("glasya") || race.contains("dispater")) dex += 1;
+				if(race.contains("mephistopholes")) intl += 1;
+				if(race.contains("zariel")) str += 1;
+				if(race.contains("levistus")) con += 1;
+			}
+			
+			if(race.contains("elf") || race.contains("eladrin")) {
+				dex += 2;
+				if(race.contains("eladrin")) cha += 1;
+				if(race.contains("high")) intl += 1;
+				if(race.contains("shadar-kai")) con += 1;
+				if(race.contains("wood")) wis += 1;
+			}
+			
+			if(race.contains("genasi")) {
+				con += 2;
+				if(race.contains("fire")) intl += 1;
+				if(race.contains("earth")) str += 1;
+				if(race.contains("water")) wis += 1;
+			}
+			
+			if(race.equals("bugbear")) {
+				str += 2;
+				dex += 1;
+			}
+			
+			if(race.contains("gith")) {
+				intl += 1;
+				if(race.equals("githyanki")) str += 2;
+				if(race.equals("githzerai")) wis += 2;
+			}
+			
+			if(race.contains("gnome")) {
+				intl += 2;
+				if(race.contains("rock")) con += 1;
+				if(race.contains("forest")) dex += 1;
+			}
+			
+			if(race.equals("hobgoblin")) {
+				con += 2;
+				intl += 1;
+			}
+			
+			if(race.contains("yuan-ti")) {
+				cha += 2;
+				intl += 1;
+			}
+			
+			if(race.contains("aasimar")) {
+				cha += 2;
+				if(race.contains("protector")) wis += 1;
+				if(race.contains("scourge")) con += 1;
+				if(race.contains("fallen")) str += 1;
+			}
+			
+			if(race.contains("halfling")) {
+				dex += 2;
+				if(race.contains("lightfoot")) cha += 1;
+				if(race.contains("ghostwise")) wis += 1;
+				if(race.contains("stout")) con += 1;
+			}
+			
+			if(race.equals("warforged")) {
+				con += 2;
+				if(clas.equals("artificer")) intl += 1;
+				if(clas.equals("barbarian") || clas.equals("fighter")) str += 1;
+				if(clas.equals("monk")) dex += 1;
+				choice.add("-Skill Proficiency (Specialized Design)");
+				choice.add("-Tool Proficiency (Specialized Design)");
+			}
+			
+			if(race.equals("dragonborn")) {
+				str += 2;
+				cha += 1;
+				choice.add("-Draconic Ancestry");
+			}
+			
+			if(race.contains("dwarf")) {
+				con += 2;
+				if(race.contains("hill")) wis += 1;
+				if(race.contains("mountain")) str += 2;
+			}
+			
+			if(race.equals("goliath") || race.equals("half-orc")) {
+				str += 2;
+				con += 1;
+			}
+			
+			if(race.equals("tortle")) {
+				str += 2;
+				wis += 1;
+			}
+			
+			if(race.equals("tabaxi")) {
+				dex += 2;
+				cha += 1;
+			}
+			
+			if(race.equals("triton")) {
+				str += 1;
+				con += 1;
+				cha += 1;
+			}
+			
+			if(race.equals("verdan")) {
+				cha += 2;
+				con += 1;
+			}
+			
+			if(race.equals("firbolg")) {
+				wis += 2;
+				str += 1;
+			}
+			
+			if(race.equals("aarakocra")) {
+				dex += 2;
+				wis += 1;
+			}
+			
+			if(race.equals("human")) {
+				str += 1;
+				con += 1;
+				cha += 1;
+				dex += 1;
+				wis += 1;
+				intl += 1;
+				choice.add("-Additional Language (Human)");
+			}
+			
+			if(race.equals("kobold")) {
+				dex += 2;
+				cha += 1;
+			}
+			
+			if(race.equals("goblin")) {
+				dex += 2;
+				con += 1;
+			}
+			
+			if(race.equals("kenku")) {
+				dex += 2;
+				wis += 1;
+				choice.add("-Kenku Training Proficiencies");
+			}
+			
+			if(race.equals("lizardfolk")) {
+				con += 2;
+				wis += 1;
+				choice.add("-Hunter's Lore Proficiencies");
+			}
+			
+			if(race.equals("satyr")) {
+				cha += 2;
+				dex += 1;
+				choice.add("-Reveler Instrument");
+			}
+			
+			if(race.contains("simic")) {
+				con += 2;
+				if(clas.equals("warlock")) wis += 1;
+				if(clas.equals("monk")) dex += 1;
+				if(clas.equals("fighter")) str += 1;
+				choice.add("-Animal Enhancement (Simic Hybrid)");
 			}
 			
 			//set base ac
@@ -295,10 +462,6 @@ public class CharacterRandomizer {
 			if(clas.equals("monk")) ac = (short)(10 + ((((dex < 10) ? dex-1:dex)-10)/2) + ((((wis < 10) ? wis-1:wis)-10)/2));
 			else if(clas.equals("barbarian")) ac = (short)(10 + ((((dex < 10) ? dex-1:dex)-10)/2) + ((((con < 10) ? con-1:con)-10)/2));
 			else ac = (short)(10 + (((dex < 10) ? dex-1:dex)-10)/2);
-			
-			//arraylists for keeping track of feat names and such
-			ArrayList<String> feats = new ArrayList<String>();
-			ArrayList<String> choice = new ArrayList<String>();
 			
 			//frame to output character info
 			charOutput.setSize(378,300);
@@ -412,6 +575,7 @@ public class CharacterRandomizer {
 			fl.setFont(new Font("Times New Roman", Font.PLAIN, 14));
 			featLabel.add(fl);
 			charOutput.add(featLabel);
+			
 			JPanel choiceLabel = new JPanel();
 			choiceLabel.setBounds(215,85,90,20);
 			choiceLabel.setBackground(Color.black);
@@ -425,14 +589,39 @@ public class CharacterRandomizer {
 			//feature names
 			JPanel featsPanel = new JPanel();
 			featsPanel.setBounds(5,110,175,150);
-			featsPanel.setBackground(Color.magenta);
+			featsPanel.setBackground(Color.black);
+			JTextArea fp = new JTextArea(9,17);
+			fp.setBackground(Color.black);
+			fp.setForeground(Color.white);
+			fp.setEditable(false);
+			fp.setLineWrap(true);
+			fp.setWrapStyleWord(true);
+			fp.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+			JScrollPane scrollFP = new JScrollPane(fp);
+			scrollFP.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+			featsPanel.add(scrollFP);
 			charOutput.add(featsPanel);
 			
 			//choices to make
 			JPanel makeChoice = new JPanel();
 			makeChoice.setBounds(185,110,175,150);
-			makeChoice.setBackground(Color.blue);
+			makeChoice.setBackground(Color.black);
+			JTextArea mc = new JTextArea(9,17);
+			mc.setBackground(Color.black);
+			mc.setForeground(Color.white);
+			mc.setEditable(false);
+			mc.setLineWrap(true);
+			mc.setWrapStyleWord(true);
+			mc.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+			JScrollPane scrollMC = new JScrollPane(mc);
+			scrollMC.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+			makeChoice.add(scrollMC);
 			charOutput.add(makeChoice);
+			
+			//these will be for the purposes of spellcasting later
+			final int intMod = ((((intl < 10) ? intl-1:intl)-10)/2);
+			final int wisMod = ((((wis < 10) ? wis-1:wis)-10)/2);
+			final int chaMod = ((((cha < 10) ? cha-1:cha)-10)/2);
 			
 			//make the button do things
 			select.addActionListener(v -> {
@@ -446,58 +635,376 @@ public class CharacterRandomizer {
 				//wait to make it real until processing is done
 				charOutput.setVisible(true);
 				
-				//fill out feature blocks
+				//put racial features in feat block
+				feats.add("Racial:");
+				String[] raceFeats = getRacialFeatures();
+				for(String i : raceFeats) feats.add(i);
+				
+				//addl. choice
+				choice.add("-Roll for HP");
+				
+				//class feature time
+				//TODO: Artificer Subclasses
 				if(clas.equals("artificer")) {
+					choice.add("-Starter Equipment (TCoE p.9");
+					choice.add("-Class Proficiencies");
+					feats.add("-Magical Tinkering");
+					feats.add("-Spellcasting");
+					choice.add("-Spells Known (" + Integer.toString(intMod+level) + " total)");
 					
+					int inc = 0;
+					
+					if(level>=2) feats.add("-Infuse Item");
+					if(level>=3) feats.add("-The Right Tool for the Job");
+					if(level>=4) inc += 2;
+					if(level>=6) feats.add("-Tool Expertise");
+					if(level>=7) feats.add("-Flash of Genius");
+					if(level>=8) inc += 2;
+					if(level>=10) feats.add("-Magic Item Adept");
+					if(level>=11) feats.add("-Spell-Storing Item");
+					if(level>=12) inc += 2;
+					if(level>=14) feats.add("-Magical Item Savant");
+					if(level>=16) inc += 2;
+					if(level>=18) feats.add("-Magic Item User");
+					if(level>=19) inc += 2;
+					if(level==20) feats.add("-Soul of Artifice");
+					
+					if(inc > 0) choice.add("-Assign " + Integer.toString(inc) + " Ability Points");
 				}
 				
+				//TODO: Barbarian Subclasses
 				if(clas.equals("barbarian")) {
-									
+					choice.add("-Starting Equipment");
+					choice.add("-Class Proficiencies (PHB p.46");
+					feats.add("-Rage\n-Unarmored Defense");
+					
+					int inc = 0;
+					
+					if(level>=2) feats.add("-Reckless Attack\n-Danger Sense");
+					if(level>=4) inc += 2;
+					if(level>=5) feats.add("-Extra Attack\n-Fast Movement");
+					if(level>=7) feats.add("-Feral Instinct");;
+					if(level>=8) inc += 2;
+					if(level>=9) {
+						int bcd = 1; if(level>=13) bcd++; if(level>=17) bcd++;
+						feats.add("-Brutal Critical (" + Integer.toString(bcd) + " Die)");
+					}
+					if(level>=11) feats.add("-Relentless Rage");
+					if(level>=12) inc += 2;
+					if(level>=15) feats.add("-Persistent Rage");
+					if(level>=16) inc += 2;
+					if(level>=18) feats.add("-Indomitable Might");
+					if(level>=19) inc += 2;
+					if(level==20) feats.add("-Primal Champion");
+					
+					if(inc > 0) choice.add("-Assign " + Integer.toString(inc) + " Ability Points");
 				}
 				
+				//TODO: Bard Subclasses
 				if(clas.equals("bard")) {
+					choice.add("-Starter Equipment");
+					choice.add("-Class Proficiencies (PHB p.51");
+					feats.add("-Spellcasting");
+					int[] spellsKnown = {4,5,6,7,8,9,10,11,12,14,15,15,16,18,19,19,20,22,22,22};
+					choice.add("-Spells Known (" + spellsKnown[level-1] + " total)");
 					
+					//dice size for things
+					int biDie = 6;
+					int SORdie = 0;
+					
+					int inc = 0;
+					
+					if(level>=2) {
+						SORdie = 6;
+						feats.add("-Jack of All Trades");
+					}
+					if(level>=3) feats.add("-Expertise" + ((level>=10) ? " (2x)" : ""));
+					if(level>=4) inc += 2;
+					if(level>=5) {
+						biDie = 8;
+						feats.add("-Font of Inspiration");
+					}
+					if(level>=6) feats.add("-Countercharm");
+					if(level>=8) inc += 2;
+					if(level>=9) SORdie = 8;
+					if(level>=10) {
+						int secrets = 1; if(level>=14) secrets++; if(level>=18) secrets++;
+						
+						feats.add("-Magical Secrets (" + secrets + "x)");
+						biDie = 10;
+					}
+					if(level>=12) inc += 2;
+					if(level>=13) SORdie = 10;
+					if(level>=15) biDie = 12;
+					if(level>=16) inc += 2;
+					if(level>=17) SORdie = 12;
+					if(level>=19) inc += 2;
+					if(level==20) feats.add("-Superior Inspiration");
+					
+					feats.add("-Bardic Inspiration(d" + biDie + ")");
+					if(SORdie > 0)feats.add("-Song of Rest(d" + biDie + ")");
+					
+					if(inc > 0) choice.add("-Assign " + Integer.toString(inc) + " Ability Points");
 				}
 				
+				//TODO: Cleric Subclasses
 				if(clas.equals("cleric")) {
+					choice.add("-Starter Equipment");
+					choice.add("-Class Proficiencies (PHB p.56)");
+					choice.add("-Spells Prepared (" + Integer.toString(wisMod+level) + " total)");
+					feats.add("-Spellcasting");
 					
+					int inc = 0;
+					
+					if(level>=2) {
+						int cd = 1; if(level>=6)cd++;if(level>=18)cd++;
+						feats.add("-Channel Divinity (" + cd + "/rest)");
+					}
+					if(level>=4) inc += 2;
+					if(level>=5) {
+						String du = "1/2 CR"; if(level>=8)du="1 CR"; if(level>=11)du="2 CR"; if(level>=14)du="3 CR"; if(level>=17)du="4 CR";
+						feats.add("-Destroy Unded (" + du + ")");
+					}
+					if(level>=8) inc += 2;
+					if(level>=10) feats.add("-Divine Intervention"+((level==20) ? " (Improved)" : ""));
+					if(level>=12) inc += 2;
+					if(level>=16) inc += 2;
+					if(level>=19) inc += 2;
+					
+					if(inc > 0) choice.add("-Assign " + Integer.toString(inc) + " Ability Points");
 				}
 				
+				//TODO: Druid Subclasses
 				if(clas.equals("druid")) {
+					choice.add("-Starter Equipment");
+					choice.add("-Class Proficiencies (PHB p.64)");
+					choice.add("-Spells Known (" + Integer.toString(wisMod+level) + " total)");
+					feats.add("-Druidic");
+					feats.add("-Spellcasting");
 					
+					int inc = 0;
+					
+					if(level>=2) feats.add("-Wild Shape");
+					if(level>=3);
+					if(level>=4) inc += 2;
+					if(level>=8) inc += 2;
+					if(level>=12) inc += 2;
+					if(level>=16) inc += 2;
+					if(level>=18) feats.add("-Timeless Body\n-Beast Spells");
+					if(level>=19) inc += 2;
+					if(level==20) feats.add("-Archdruid");
+
+					if(inc > 0) choice.add("-Assign " + Integer.toString(inc) + " Ability Points");
 				}
 				
+				//TODO: Fighter
 				if(clas.equals("fighter")) {
 					
+					
+					if(level>=2);
+					if(level>=3);
+					if(level>=4);
+					if(level>=5);
+					if(level>=6);
+					if(level>=7);
+					if(level>=8);
+					if(level>=9);
+					if(level>=10);
+					if(level>=11);
+					if(level>=12);
+					if(level>=13);
+					if(level>=14);
+					if(level>=15);
+					if(level>=16);
+					if(level>=17);
+					if(level>=18);
+					if(level>=19);
+					if(level==20);
 				}
 				
+				//TODO: Monk
 				if(clas.equals("monk")) {
 					
+					
+					if(level>=2);
+					if(level>=3);
+					if(level>=4);
+					if(level>=5);
+					if(level>=6);
+					if(level>=7);
+					if(level>=8);
+					if(level>=9);
+					if(level>=10);
+					if(level>=11);
+					if(level>=12);
+					if(level>=13);
+					if(level>=14);
+					if(level>=15);
+					if(level>=16);
+					if(level>=17);
+					if(level>=18);
+					if(level>=19);
+					if(level==20);
 				}
 				
+				//TODO: Paladin
 				if(clas.equals("paladin")) {
 					
+					
+					if(level>=2);
+					if(level>=3);
+					if(level>=4);
+					if(level>=5);
+					if(level>=6);
+					if(level>=7);
+					if(level>=8);
+					if(level>=9);
+					if(level>=10);
+					if(level>=11);
+					if(level>=12);
+					if(level>=13);
+					if(level>=14);
+					if(level>=15);
+					if(level>=16);
+					if(level>=17);
+					if(level>=18);
+					if(level>=19);
+					if(level==20);
 				}
 				
+				//TODO: Ranger
 				if(clas.equals("ranger")) {
 					
+					
+					if(level>=2);
+					if(level>=3);
+					if(level>=4);
+					if(level>=5);
+					if(level>=6);
+					if(level>=7);
+					if(level>=8);
+					if(level>=9);
+					if(level>=10);
+					if(level>=11);
+					if(level>=12);
+					if(level>=13);
+					if(level>=14);
+					if(level>=15);
+					if(level>=16);
+					if(level>=17);
+					if(level>=18);
+					if(level>=19);
+					if(level==20);
 				}
 				
+				//TODO: Rogue
 				if(clas.equals("rogue")) {
 					
+					
+					if(level>=2);
+					if(level>=3);
+					if(level>=4);
+					if(level>=5);
+					if(level>=6);
+					if(level>=7);
+					if(level>=8);
+					if(level>=9);
+					if(level>=10);
+					if(level>=11);
+					if(level>=12);
+					if(level>=13);
+					if(level>=14);
+					if(level>=15);
+					if(level>=16);
+					if(level>=17);
+					if(level>=18);
+					if(level>=19);
+					if(level==20);
 				}
 				
+				//TODO: Sorcerer
 				if(clas.equals("sorcerer")) {
 					
+					
+					if(level>=2);
+					if(level>=3);
+					if(level>=4);
+					if(level>=5);
+					if(level>=6);
+					if(level>=7);
+					if(level>=8);
+					if(level>=9);
+					if(level>=10);
+					if(level>=11);
+					if(level>=12);
+					if(level>=13);
+					if(level>=14);
+					if(level>=15);
+					if(level>=16);
+					if(level>=17);
+					if(level>=18);
+					if(level>=19);
+					if(level==20);
 				}
 				
+				//TODO: Warlock
 				if(clas.equals("warlock")) {
 					
+					
+					if(level>=2);
+					if(level>=3);
+					if(level>=4);
+					if(level>=5);
+					if(level>=6);
+					if(level>=7);
+					if(level>=8);
+					if(level>=9);
+					if(level>=10);
+					if(level>=11);
+					if(level>=12);
+					if(level>=13);
+					if(level>=14);
+					if(level>=15);
+					if(level>=16);
+					if(level>=17);
+					if(level>=18);
+					if(level>=19);
+					if(level==20);
 				}
 				
+				//TODO: Wizard
 				if(clas.equals("wizard")) {
 					
+					
+					if(level>=2);
+					if(level>=3);
+					if(level>=4);
+					if(level>=5);
+					if(level>=6);
+					if(level>=7);
+					if(level>=8);
+					if(level>=9);
+					if(level>=10);
+					if(level>=11);
+					if(level>=12);
+					if(level>=13);
+					if(level>=14);
+					if(level>=15);
+					if(level>=16);
+					if(level>=17);
+					if(level>=18);
+					if(level>=19);
+					if(level==20);
 				}
+				
+				//set feature and choice text boxes
+				String featsList = "";
+				for(String i : feats) featsList += i + "\n";
+				fp.setText(featsList);
+				
+				String choiceList = "";
+				for(String i : choice) choiceList += i + "\n";
+				mc.setText(choiceList);
 				
 				//wait a sec, then open webpages
 				openWebpage("https://media.wizards.com/2016/dnd/downloads/5E_CharacterSheet_Fillable.pdf"); //Character sheet
@@ -556,18 +1063,239 @@ public class CharacterRandomizer {
 		else return "artificer";
 	}
 	
-	//TODO: list all racial feats, use txt file with list of used races
 	//returns an array including racial features
 	public String[] getRacialFeatures() {
 		ArrayList<String> features = new ArrayList<String>();
 		
 		if(race.contains("tiefling")) {
 			features.add("-Darkvision(60ft)");
-			features.add("-Speed: 30ft");
 			features.add("-Hellish Resistance");
+			if(race.contains("glasya")) features.add("-Legacy of Malboge");
+			if(race.contains("mephistopholes")) features.add("-Legacy of Cania");
+			if(race.contains("zariel")) features.add("-Legacy of Avernus");
+			if(race.contains("dispater")) features.add("-Legacy of Dis");
+			if(race.contains("levistus")) features.add("-Legacy of Stygia");
 		}
 		
-		return (String[])(features.toArray());
+		if(race.contains("elf") || race.contains("eladrin")) {
+			features.add("-Darkvision(60ft)");
+			features.add("-Fey Ancestry");
+			features.add("-Trance");
+			features.add("-Keen Senses");
+			if(race.contains("eladrin")) features.add("-Fey Step ("+race.substring(0,6) + ")");
+			if(race.contains("high")) {
+				features.add("-Elf Weapon Training");
+				features.add("-Extra Language");
+			}
+			if(race.contains("shadar-kai")) {
+				features.add("-Necrotic Resistance");
+				features.add("-Blessing of the Raven Queen");
+			}
+			if(race.contains("wood")) {
+				features.add("-Fleet of Foot");
+				features.add("-Elf Weapon Training");
+				features.add("-Mask of the Wild");
+			}
+		}
+		
+		if(race.contains("genasi")) {
+			if(race.contains("fire")) {
+				features.add("-Darkvision(60ft)");
+				features.add("-Fire Resistance");
+				features.add("-Reach to the Blaze");
+			}
+			if(race.contains("earth")) {
+				features.add("-Earth Walk");
+				features.add("-Merge with Stone");
+			}
+			if(race.contains("water")) {
+				features.add("-Acid Resistance");
+				features.add("-Amphibious");
+				features.add("-Swim");
+				features.add("-Call to the Wave");
+			}
+		}
+		
+		if(race.equals("bugbear")) {
+			features.add("-Darkvision(60ft)");
+			features.add("-Long-Limbed");
+			features.add("-Powerful Build");
+			features.add("-Sneaky");
+			features.add("-Surprise Attack");
+		}
+		
+		if(race.contains("gith")) {
+			if(race.equals("githyanki")) {
+				features.add("-Decadent Mastery");
+				features.add("-Martial Prodigy");
+				features.add("-Githyanki Psionics");
+			}
+			if(race.equals("githzerai")) {
+				features.add("-Mental Discipline");
+				features.add("-Githzerai Psionics");
+			}
+		}
+		
+		if(race.contains("gnome")) {
+			features.add("-Darkvision(60ft)");
+			features.add("-Gnome Cunning");
+			if(race.contains("forest")) {
+				features.add("-Natural Illusionist");
+				features.add("-Speak with Small Beasts");
+			}
+			if(race.contains("rock")) {
+				features.add("-Artificer's Lore");
+				features.add("-Tinker");
+			}
+		}
+		
+		if(race.equals("hobgoblin")) {
+			features.add("-Darkvision(60ft)");
+			features.add("-Martial Training");
+			features.add("-Saving Face");
+		}
+		
+		if (race.contains("yuan-ti")) {
+			features.add("-Darkvision(60ft)");
+			features.add("-Innate Spellcasting");
+			features.add("-Magic Resistance");
+			features.add("-Poison Immunity");
+		}
+		
+		if(race.contains("aasimar")) {
+			features.add("-Darkvision(60ft)");
+			features.add("-Celestial Resistance");
+			features.add("Healing Hands");
+			features.add("-Light Bearer");
+			if(race.contains("protector")) features.add("-Radiant Soul");
+			if(race.contains("scourge")) features.add("-Radiant Consumption");
+			if(race.contains("fallen")) features.add("-Necrotic Shroud");
+		}
+		
+		if(race.contains("halfling")) {
+			features.add("-Lucky");
+			features.add("-Brave");
+			features.add("-Nimble");
+			if(race.contains("lightfoot")) features.add("-Naturally Stealthy");
+			if(race.contains("stout")) features.add("-Stout Resilience");
+			if(race.contains("ghostwise")) features.add("-Silent Speech");
+		}
+		
+		if(race.equals("warforged")) {
+			features.add("-Constructed Resilience");
+			features.add("-Sentry's Rest");
+			features.add("-Integrated Protection");
+		}
+		
+		if(race.equals("dragonborn")) {
+			features.add("-Breath Weapon");
+		}
+		
+		if(race.contains("dwarf")) {
+			features.add("-Darkvision(60ft)");
+			features.add("-Dwarven Resilience");
+			features.add("-Dwarven Combat Training");
+			features.add("-Stonecunning");
+			if(race.contains("hill")) features.add("-Dwarven Toughness");
+			if(race.contains("mountain")) features.add("-Dwarven Armor Training");
+		}
+		
+		if(race.equals("goliath")) {
+			features.add("-Natural Athlete");
+			features.add("-Stone's Endurance");
+			features.add("-Powerful Build");
+			features.add("-Mountain Born");
+		}
+		
+		if(race.equals("half-orc")) {
+			features.add("-Darkvision(60ft)");
+			features.add("-Menacing");
+			features.add("-Relentless Endurance");
+			features.add("-Savage Attacks");
+		}
+		
+		if(race.equals("tortle")) {
+			features.add("-Claws");
+			features.add("-Hold Breath");
+			features.add("-Natural Armor");
+			features.add("-Shell Defense");
+			features.add("-Survival Instinct");
+		}
+		
+		if(race.equals("tabaxi")) {
+			features.add("-Darkvision(60ft)");
+			features.add("-Feline Agility");
+			features.add("-Cat's Claws");
+			features.add("-Cat's Talent");
+		}
+		
+		if(race.equals("triton")) {
+			features.add("-Amphibious");
+			features.add("-Control Air and Water");
+			features.add("-Darkvision(60ft)");
+			features.add("-Emissary of the Sea");
+			features.add("-Guardian of the Depths");
+		}
+		
+		if(race.equals("verdan")) {
+			features.add("-Black Blood Healing");
+			features.add("-Limited Telepathy");
+			features.add("-Persuasive");
+			features.add("-Telepathic Insight");
+		}
+		
+		if(race.equals("firbolg")) {
+			features.add("-Firbolg Magic");
+			features.add("-Hidden Step");
+			features.add("-Powerful Build");
+			features.add("-Speech of Beast and Leaf");
+		}
+		
+		if(race.equals("aarakocra")) {
+			features.add("-Flight");
+			features.add("-Talons");
+		}
+		
+		if(race.equals("kobold")) {
+			features.add("-Darkvision(60ft)");
+			features.add("-Grovel, Cower, and Beg");
+			features.add("-Pack Tactics");
+			features.add("-Sunlight Sensitivity");
+		}
+		
+		if(race.equals("goblin")) {
+			features.add("-Darkvision(60ft)");
+			features.add("-Fury of the Small");
+			features.add("-Nimble Escape");
+		}
+		
+		if(race.equals("kenku")) {
+			features.add("-Expert Forgery");
+			features.add("-Mimicry");
+		}
+		
+		if(race.equals("lizardfolk")) {
+			features.add("-Bite");
+			features.add("-Cunning Action");
+			features.add("-Hold Breath");
+			features.add("-Natural Armor");
+			features.add("-Hungry Jaws");
+		}
+		
+		if(race.equals("satyr")) {
+			features.add("-Fey");
+			features.add("-Ram");
+			features.add("-Magical Resistance");
+			features.add("-Mirthful Leaps");
+			features.add("-Reveler");
+		}
+		
+		if(race.contains("simic")) features.add("-Darkvision(60ft)");
+		
+		String[] arr = new String[features.size()];
+		for(int i = 0; i < arr.length; i++) arr[i] = features.get(i);
+		
+		return arr;
 	}
 	
 	//pick a subclass. return "n/a" if none is chosen
@@ -764,13 +1492,13 @@ public class CharacterRandomizer {
 			if(rand == 2) return "githzerai";
 			if(rand == 3) return "rock gnome";
 			if(rand == 4) return "hobgoblin";
-			if(rand == 5) return "mepistopholes tiefling";
+			if(rand == 5) return "mephistopholes tiefling";
 			if(rand == 6) return "yuan-ti pureblood";
 			if(rand == 7) return "warforged";
 		}
 		
 		if(clas.equals("barbarian")) {
-			int rand = (int)(Math.random()*8);
+			int rand = (int)(Math.random()*9);
 			
 			if(rand == 0) return "bugbear";
 			if(rand == 1) return "dragonborn";
@@ -780,6 +1508,7 @@ public class CharacterRandomizer {
 			if(rand == 5) return "goliath";
 			if(rand == 6) return "half-orc";
 			if(rand == 7) return "tortle";
+			else return "warforged";
 		}
 		
 		if(clas.equals("bard")) {
@@ -790,7 +1519,6 @@ public class CharacterRandomizer {
 			if(rand == 2) return "tabaxi";
 			if(rand == 3) return "dispater tiefling";
 			if(rand == 4) return "glasya tiefling";
-			if(rand == 5) return "devil's tongue tiefling";
 			if(rand == 6) return "triton";
 			if(rand == 7) return "verdan";
 			if(rand == 8) return "yuan-ti pureblood";
@@ -817,7 +1545,7 @@ public class CharacterRandomizer {
 		}
 
 		if(clas.equals("fighter")) {
-			int rand = (int)(Math.random()*6);
+			int rand = (int)(Math.random()*8);
 			
 			if(rand == 0) return "scourge aasimar";
 			if(rand == 1) return "mountain dwarf";
@@ -825,10 +1553,12 @@ public class CharacterRandomizer {
 			if(rand == 3) return "human";
 			if(rand == 4) return "stout halfling";
 			if(rand == 5) return "kobold";
+			if(rand == 6) return "simic hybrid";
+			else return "warforged";
 		}
 
 		if(clas.equals("monk")) {
-			int rand = (int)(Math.random()*7);
+			int rand = (int)(Math.random()*9);
 			
 			if(rand == 0) return "aarakocra";
 			if(rand == 1) return "wood elf";
@@ -837,6 +1567,8 @@ public class CharacterRandomizer {
 			if(rand == 4) return "lizardfolk";
 			if(rand == 5) return "kobold";
 			if(rand == 6) return "tabaxi";
+			if(rand == 7) return "simic hybrid";
+			else return "warforged";
 		}
 
 		if(clas.equals("paladin")) {
@@ -881,13 +1613,13 @@ public class CharacterRandomizer {
 			if(rand == 1) return "dispater tiefling";
 			if(rand == 2) return "glasya tiefling";
 			if(rand == 3) return "levistus tiefling";
-			if(rand == 4) return "devil's tongue tiefling";
+			if(rand == 4) return "kobold";
 			if(rand == 5) return "verdan";
 			if(rand == 6) return "yuan-ti pureblood";
 		}
 
 		if(clas.equals("warlock")) {
-			int rand = (int)(Math.random()*6);
+			int rand = (int)(Math.random()*8);
 			
 			if(rand == 0) eladrin = true;
 			if(rand == 1) return "kobold";
@@ -895,6 +1627,8 @@ public class CharacterRandomizer {
 			if(rand == 3) return "yuan-ti pureblood";
 			if(rand == 4) return "satyr";
 			if(rand == 5) return "simic hybrid";
+			if(rand == 6) return "levistus tiefling";
+			if(rand == 7) return "glasya tiefling";
 		}
 
 		if(clas.equals("wizard")) {
@@ -902,7 +1636,7 @@ public class CharacterRandomizer {
 			
 			if(rand == 0) return "githyanki";
 			if(rand == 1) return "forest gnome";
-			if(rand == 2) return "variant eladrin";
+			if(rand == 2) eladrin = true;
 			if(rand == 3) return "high elf";
 			if(rand == 4) return "hobgoblin";
 		}
